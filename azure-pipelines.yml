@@ -19,7 +19,7 @@ steps:
 - task: FlutterBuild@0
   inputs:
     target: 'apk'
-    projectDirectory: 'owasp-top10-2016-mobile/m2/cool_games/mobile/lib'
+    projectDirectory: 'owasp-top10-2016-mobile/m5/panda_zap/mobile/lib'
     debugMode: true
     extraArgs: '--ignore-deprecation'
 
