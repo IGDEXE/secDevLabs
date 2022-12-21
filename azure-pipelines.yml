@@ -21,6 +21,7 @@ steps:
     target: 'apk'
     projectDirectory: 'owasp-top10-2016-mobile/m5/panda_zap/mobile/lib/'
     debugMode: true
+    extraArgs: '--ignore-deprecation'
 
 - task: Bash@3
   inputs:
