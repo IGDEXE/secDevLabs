@@ -16,14 +16,16 @@ steps:
     channel: 'stable'
     version: 'latest'
 
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: 'ls'
-
 - task: FlutterBuild@0
   inputs:
     target: 'apk'
-    projectDirectory: 'secDevLabs/owasp-top10-2016-mobile/m5/panda_zap/mobile/lib/'
+    projectDirectory: 'owasp-top10-2016-mobile/m5/panda_zap/mobile/lib/'
     debugMode: true
 
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      ls
+      cd owasp-top10-2016-mobile/m5/panda_zap
+      ls
