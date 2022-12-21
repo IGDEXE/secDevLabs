@@ -1,13 +1,14 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# Exemplo de pipeline para Flutter/Dart
 
 trigger:
 - master
 
 pool:
   vmImage: ubuntu-latest
+
+variables:
+  veracodeAppProfile: $(Build.DefinitionName)
+  caminhoPacote: build/app/outputs/flutter-apk/app-debug.apk
 
 steps:
 - task: FlutterInstall@0
@@ -23,10 +24,26 @@ steps:
     debugMode: true
     extraArgs: '--ignore-deprecation'
 
-- task: Bash@3
+- task: Veracode@3
   inputs:
-    targetType: 'inline'
-    script: |
-      ls
-      cd owasp-top10-2016-mobile/m5/panda_zap
-      ls
+    ConnectionDetailsSelection: 'Endpoint'
+    AnalysisService: 'Veracode'
+    veracodeAppProfile: '$(veracodeAppProfile)'
+    version: '$(build.buildNumber)'
+    filepath: '$(caminhoPacote)'
+    createProfile: true
+    importResults: true
+    maximumWaitTime: '360'
+
+- task: Veracode Flaw Importer@3
+  inputs:
+    ConnectionDetailsSelection: 'Endpoint'
+    AnalysisService: 'Veracode'
+    veracodeAppProfile: '$(veracodeAppProfile)'
+    sandboxName: 
+    scanType: 'Dynamic, Static, and Software Composition Analysis'
+    importType: 'All Flaws'
+    workItemType: 'Bug'
+    area: '$(system.teamProject)'
+    overwriteAreaPathInWorkItemsOnImport: true
+    flawImportLimit: '1000'
