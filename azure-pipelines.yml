@@ -24,6 +24,18 @@ steps:
     debugMode: true
     extraArgs: '--ignore-deprecation'
 
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      find . -name "*.apk"
+      
+      echo LS
+      ls
+      
+      echo CD
+      cd build/app/outputs/flutter-apk
+
 - task: Veracode@3
   inputs:
     ConnectionDetailsSelection: 'Endpoint'
