@@ -8,7 +8,7 @@ pool:
 
 variables:
   veracodeAppProfile: $(Build.DefinitionName)
-  caminhoPacote: build/app/outputs/flutter-apk/app-debug.apk
+  caminhoPacote: owasp-top10-2016-mobile/m5/panda_zap/mobile/build/app/outputs/flutter-apk/app-debug.apk
 
 steps:
 - task: FlutterInstall@0
@@ -23,18 +23,6 @@ steps:
     projectDirectory: 'owasp-top10-2016-mobile/m5/panda_zap/mobile/lib'
     debugMode: true
     extraArgs: '--ignore-deprecation'
-
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: |
-      find . -name "*.apk"
-      
-      echo LS
-      ls
-      
-      echo CD
-      cd build/app/outputs/flutter-apk
 
 - task: Veracode@3
   inputs:
