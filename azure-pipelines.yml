@@ -7,7 +7,7 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
-  veracodeAppProfile: $(Build.DefinitionName)
+  veracodeAppProfile: MSDN.$(Build.DefinitionName)
   caminhoPacote: owasp-top10-2016-mobile/m5/panda_zap/mobile/build/app/outputs/flutter-apk/app-debug.apk
 
 steps:
@@ -27,7 +27,7 @@ steps:
 - task: Veracode@3
   inputs:
     ConnectionDetailsSelection: 'Endpoint'
-    AnalysisService: 'Veracode'
+    AnalysisService: 'veracode-evento'
     veracodeAppProfile: '$(veracodeAppProfile)'
     version: '$(build.buildNumber)'
     filepath: '$(caminhoPacote)'
@@ -38,7 +38,7 @@ steps:
 - task: Veracode Flaw Importer@3
   inputs:
     ConnectionDetailsSelection: 'Endpoint'
-    AnalysisService: 'Veracode'
+    AnalysisService: 'veracode-evento'
     veracodeAppProfile: '$(veracodeAppProfile)'
     sandboxName: 
     scanType: 'Dynamic, Static, and Software Composition Analysis'
